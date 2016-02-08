@@ -1,16 +1,21 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-// import { searchCity } from '../actions/index'
+import fetchWeather from '../actions/index';
 
 let SearchBar = React.createClass({
   getInitialState: function() {
     return { input: '' }
   },
 
+  componentWillMount: function() {
+
+  },
+
   searchInput: function(e) {
     e.preventDefault();
-    // searchCity();
+    this.props.fetchWeather(this.state.input);
+    this.setState({ input: ''})
   },
 
   updateInput: function(e) {
@@ -36,8 +41,9 @@ let SearchBar = React.createClass({
   }
 });
 
-// function mapDispatchToProps(dispatch) {
-//   return bindActionCreators({ searchCity }, dispatch)
-// }
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators({ fetchWeather: fetchWeather }, dispatch);
+}
 
-export default SearchBar;
+let searchBarProps = connect(null, mapDispatchToProps);
+export default searchBarProps(SearchBar);
